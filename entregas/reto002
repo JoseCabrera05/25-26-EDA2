@@ -1,0 +1,130 @@
+# Reto 002
+
+## Solución por recursividad
+
+El problema se resuelve con **recursividad y backtracking**, procesando la suma **columna a columna**, de **derecha a izquierda**, y propagando el acarreo.
+
+La idea es mantener en cada llamada recursiva:
+
+- la columna actual,
+- el acarreo recibido,
+- la asignación parcial de letras a dígitos,
+- y el conjunto de dígitos ya usados.
+
+### Reglas
+
+- Una letra siempre representa el mismo dígito.
+- Dos letras distintas no pueden compartir dígito.
+- Ninguna palabra puede empezar por 0.
+
+### Esquema recursivo
+
+1. Tomar la última columna.
+2. Sumar los valores asignados más el acarreo.
+3. Comprobar si el dígito obtenido coincide con el de la palabra resultado.
+4. Si alguna letra no está asignada, probar dígitos libres.
+5. Si la columna es válida, continuar con la columna anterior.
+6. Si no hay solución, deshacer la asignación y probar otra opción.
+
+### Caso base
+
+Cuando no quedan columnas:
+
+- si el acarreo es 0, la solución es válida,
+- si queda acarreo, la rama se descarta.
+
+## Seudocódigo
+
+```text
+resolver(columna, acarreo, asignacion, usados):
+	si columna < 0:
+		devolver acarreo = 0
+
+	obtener las letras de esa columna y la letra del resultado
+
+	si todas las letras están asignadas:
+		suma = acarreo + suma_de_digitos_de_la_columna
+		si suma mod 10 != digito_del_resultado:
+			devolver falso
+		nuevo_acarreo = suma div 10
+		devolver resolver(columna - 1, nuevo_acarreo, asignacion, usados)
+
+	elegir una letra sin asignar
+	para cada dígito libre:
+		si el dígito es 0 y la letra es inicial de una palabra:
+			continuar
+
+		asignar letra -> dígito
+		marcar dígito como usado
+
+		si la asignación parcial sigue siendo compatible:
+			calcular nuevo_acarreo
+			si resolver(columna - 1, nuevo_acarreo, asignacion, usados):
+				devolver verdadero
+
+		deshacer asignación
+
+	devolver falso
+```
+
+## Aplicación a los tres acertijos
+
+### 1) SEND + MORE = MONEY
+
+Solución:
+
+- S = 9
+- E = 5
+- N = 6
+- D = 7
+- M = 1
+- O = 0
+- R = 8
+- Y = 2
+
+Comprobación:
+
+$$
+9567 + 1085 = 10652
+$$
+
+### 2) FORTY + TEN + TEN = SIXTY
+
+Solución válida:
+
+- F = 2
+- O = 9
+- R = 7
+- T = 8
+- Y = 6
+- E = 5
+- N = 0
+- S = 3
+- I = 1
+- X = 4
+
+Comprobación:
+
+$$
+29786 + 850 + 850 = 31486
+$$
+
+### 3) ODD + ODD = EVEN
+
+Solución válida:
+
+- O = 6
+- D = 5
+- E = 1
+- V = 3
+- N = 0
+
+Comprobación:
+
+$$
+655 + 655 = 1310
+$$
+
+## Conclusión
+
+La solución consiste en aplicar **recursividad con backtracking** por columnas. Es una estrategia general que sirve para cualquiera de los tres criptaritmos, cambiando únicamente las palabras de entrada.
