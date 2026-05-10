@@ -54,7 +54,7 @@
 
 ---
 
-## 📋 Prueba 3: ¿Arrancar del Centro vs Arrancar de la Esquina?
+## Prueba 3: ¿Arrancar del Centro vs Arrancar de la Esquina?
 
 ### Estrategia 1: Desde ESQUINA (0,0) - Buscando 16
 ```
