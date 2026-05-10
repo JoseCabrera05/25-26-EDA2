@@ -1,4 +1,4 @@
-# 2Think²: Pruebas del Algoritmo Diagonal
+# 2Think²: Pruebas del Algoritmo Diagonal 
 
 ## Matriz de Referencia
 ```
@@ -9,74 +9,95 @@
 19  24  28  33  40
 ```
 
+---
+
 ## Prueba 1: Buscando 21
 
-**Posición esperada**: Fila 0, Columna 4 (esquina superior-derecha de la diagonal)
+**Posición esperada**: Fila 0, Columna 4
 
-**Traza del algoritmo desde esquina superior-izquierda (0,0) moviéndose diagonalmente:**
+**Traza del algoritmo (desde esquina superior-izquierda):**
 
-1. (0,0): 2 < 21 → Comparación 1
-2. (1,1): 7 < 21 → Comparación 2
-3. (2,2): 15 < 21 → Comparación 3
-4. (3,3): 27 > 21 → Comparación 4 (cambiar dirección)
-5. (2,3): 20 < 21 → Comparación 5 (buscar hacia arriba-derecha)
-6. (1,3): 17 < 21 → Comparación 6
-7. (0,3): 14 < 21 → Comparación 7
-8. (0,4): 21 = 21 → Comparación 8 ✓ **ENCONTRADO**
+```
+[1] Posición (0, 0): 2 < 21 → Mover DERECHA
+[2] Posición (0, 1): 5 < 21 → Mover DERECHA
+[3] Posición (0, 2): 9 < 21 → Mover DERECHA
+[4] Posición (0, 3): 14 < 21 → Mover DERECHA
+[5] Posición (0, 4): 21 = 21 ✓ ENCONTRADO
+```
 
-**Total: 8 comparaciones** (mejor caso)
+**Resultado**: ✓ **ENCONTRADO en (0, 4)**
+**Total: 5 comparaciones** (mejor caso)
 
 ---
 
 ## Prueba 2: Buscando 16
 
-**Estado esperado**: No existe en la matriz
+**Resultado esperado**: No existe en la matriz
 
-**Traza del algoritmo desde esquina superior-izquierda (0,0):**
+**Traza del algoritmo (desde esquina superior-izquierda):**
 
-1. (0,0): 2 < 16 → Comparación 1
-2. (1,1): 7 < 16 → Comparación 2
-3. (2,2): 15 < 16 → Comparación 3
-4. (3,3): 27 > 16 → Comparación 4 (cambiar dirección)
-5. (2,3): 20 > 16 → Comparación 5 (subir)
-6. (1,3): 17 > 16 → Comparación 6 (subir)
-7. (0,3): 14 < 16 → Comparación 7 (mover derecha)
-8. (0,4): 21 > 16 → Comparación 8 (volver atrás)
-9. Verificar zona intermedia (0,2)-(1,2)
-10. (0,2): 9 < 16 → Comparación 9
-11. (1,2): 11 < 16 → Comparación 10
+```
+[1] Posición (0, 0): 2 < 16 → Mover DERECHA
+[2] Posición (0, 1): 5 < 16 → Mover DERECHA
+[3] Posición (0, 2): 9 < 16 → Mover DERECHA
+[4] Posición (0, 3): 14 < 16 → Mover DERECHA
+[5] Posición (0, 4): 21 > 16 → Mover ABAJO
+[6] Posición (1, 4): 25 > 16 → Mover ABAJO
+[7] Posición (2, 4): 30 > 16 → Mover ABAJO
+[8] Posición (3, 4): 35 > 16 → Mover ABAJO
+[9] Posición (4, 4): 40 > 16 → Mover ABAJO
+✗ NO ENCONTRADO
+```
 
-**Total: 10 comparaciones** (peor caso)
-
-**Resultado**: 16 no existe en la matriz
+**Resultado**: ✗ **NO ENCONTRADO**
+**Total: 9 comparaciones** (peor caso real)
 
 ---
 
-## Análisis: ¿Arrancar del Centro vs Arrancar de la Esquina?
+## 📋 Prueba 3: ¿Arrancar del Centro vs Arrancar de la Esquina?
 
-### Comparación de Estrategias
+### Estrategia 1: Desde ESQUINA (0,0) - Buscando 16
+```
+Total comparaciones: 9
+```
 
-**Estrategia 1: Arrancar de esquina superior-izquierda (0,0)**
-- Ventaja: Fácil de implementar
-- Desventaja: Puede requerir búsquedas extensas en matrices grandes
+### Estrategia 2: Desde CENTRO (2,2) - Buscando 16
+```
+[1] Posición (2, 2): 15 < 16 → Mover DERECHA
+[2] Posición (2, 3): 20 > 16 → Mover ARRIBA
+[3] Posición (1, 3): 17 > 16 → Mover ARRIBA
+[4] Posición (0, 3): 14 < 16 → Mover DERECHA
+[5] Posición (0, 4): 21 > 16 → Mover ARRIBA
+✗ NO ENCONTRADO
 
-**Estrategia 2: Arrancar del Centro (2,2)**
-Buscando 16 desde el centro:
-1. (2,2): 15 < 16 → Comparación 1 (buscar derecha)
-2. (2,3): 20 > 16 → Comparación 2 (buscar arriba)
-3. (1,3): 17 > 16 → Comparación 3 (buscar arriba)
-4. (0,3): 14 < 16 → Comparación 4 (buscar derecha)
-5. (0,4): 21 > 16 → Comparación 5 (buscar izquierda)
-6. (0,2): 9 < 16 → Comparación 6
-7. (1,2): 11 < 16 → Comparación 7
+Total comparaciones: 5 (MEJORA: 5 comparaciones)
+```
 
-**Total desde centro: 7 comparaciones** vs **10 comparaciones desde esquina**
+### 🎯 Análisis Comparativo
 
-### Conclusión
+| Métrica | Esquina | Centro | Mejora |
+|---------|---------|--------|--------|
+| Comparaciones | 9 | 5 | **44% menos** |
+| Efficiency | Estándar | Optimizado | ✓ Mejor |
+| Aplicabilidad | Pequeño | Grande | Centro gana |
+
+---
+
+### ✅ Conclusión
 
 **SÍ existe un caso concreto donde arrancar del centro es mejor:**
-- **Valor 16** requiere 10 comparaciones desde esquina pero solo 7 desde el centro
-- El centro proporciona una "mejor proximidad" a valores que están distribuidos en la matriz
-- Para matrices grandes, arrancar del centro puede reducir tiempo promedio
 
-**Recomendación**: Un algoritmo híbrido que comience del centro sería más eficiente que comenzar siempre de la esquina.
+- **Búsqueda del valor 16 (no existe):**
+  - Desde esquina: 9 comparaciones
+  - Desde centro: 5 comparaciones
+  - **Mejora: 44% menos comparaciones** 
+
+- **Razón:**
+  - El centro proporciona mejor proximidad a valores distribuidos
+  - Reduce el rango de búsqueda más rápidamente
+  - Especialmente efectivo en matrices grandes
+
+**Recomendación Técnica**: 
+- Para matrices pequeñas: esquina (más simple)
+- Para matrices grandes: centro o híbrido (más eficiente)
+- Caso práctico probado: valor 16 demuestra clara ventaja del centro
