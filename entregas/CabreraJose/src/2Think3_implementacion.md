@@ -1,6 +1,6 @@
 # 2Think³: Codificación del Algoritmo
 
-## 📝 Descripción de la Implementación
+## Descripción de la Implementación
 
 Se ha creado una clase Java `BusquedaMatriz` con métodos estáticos para resolver el reto de búsqueda en matriz ordenada.
 
