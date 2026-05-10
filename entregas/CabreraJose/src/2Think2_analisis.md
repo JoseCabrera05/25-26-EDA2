@@ -73,7 +73,7 @@ Total comparaciones: 9
 Total comparaciones: 5 (MEJORA: 5 comparaciones)
 ```
 
-### 🎯 Análisis Comparativo
+### Análisis Comparativo
 
 | Métrica | Esquina | Centro | Mejora |
 |---------|---------|--------|--------|
@@ -83,7 +83,7 @@ Total comparaciones: 5 (MEJORA: 5 comparaciones)
 
 ---
 
-### ✅ Conclusión
+### Conclusión
 
 **SÍ existe un caso concreto donde arrancar del centro es mejor:**
 
